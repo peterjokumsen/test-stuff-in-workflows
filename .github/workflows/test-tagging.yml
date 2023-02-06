@@ -10,6 +10,11 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
+      - name: set a var
+        id: set-a-var
+        shell: pwsh
+        run: echo "value=1.1.1" >> $GITHUB_OUTPUTS
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
@@ -26,7 +31,7 @@ jobs:
           git tag -d latest || true
           $majorTag = "v1"
           git tag -d $majorTag || true
-          $minorTag = "v1.0"
+          $minorTag = "v${{ steps.set-a-var.outputs.value }}"
           git tag -d $minorTag || true
           git push origin :latest || true
           git push origin :$majorTag || true
