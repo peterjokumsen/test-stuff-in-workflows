@@ -9,8 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
       - name: tag major and minor versions
+        shell: pwsh
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
@@ -19,9 +22,9 @@ jobs:
           ############################## Delete old tags if they exist
 
           git tag -d latest || true
-          majorTag="v1"
+          $majorTag = "v1"
           git tag -d $majorTag || true
-          minorTag="v1.0"
+          $minorTag = "v1.0"
           git tag -d $minorTag || true
           git push origin :latest || true
           git push origin :$majorTag || true
