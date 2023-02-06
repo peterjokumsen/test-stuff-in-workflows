@@ -1,0 +1,38 @@
+on:
+  push:
+
+
+name: Release
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: tag major and minor versions
+        shell: pwsh
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/peterjokumsen/test-stuff-in-workflows.git"
+
+          ############################## Delete old tags if they exist
+
+          git tag -d latest || true
+          $majorTag = "v1"
+          git tag -d $majorTag || true
+          $minorTag = "v1.0"
+          git tag -d $minorTag || true
+          git push origin :latest || true
+          git push origin :$majorTag || true
+          git push origin :$minorTag || true
+
+          ############################## Create tags
+
+          git tag -a latest -m "Release latest using ${minorTag}"
+          git tag -a $majorTag -m "Release ${majorTag}"
+          git tag -a $minorTag -m "Release ${minorTag}"
+          git push origin latest
+          git push origin $majorTag
+          git push origin $minorTag
