@@ -4,6 +4,8 @@ on:
 
 name: Test Tagging
 
+permissions: write-all
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
