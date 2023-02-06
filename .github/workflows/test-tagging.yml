@@ -13,7 +13,7 @@ jobs:
       - name: set a var
         id: set-a-var
         shell: pwsh
-        run: echo "value=1.1.1" >> $GITHUB_OUTPUTS
+        run: echo "value=1.1.1" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v3
         with:
