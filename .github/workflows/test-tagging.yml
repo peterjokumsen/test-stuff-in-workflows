@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: set a var
-        id: set-a-var
+        id: set
         shell: pwsh
         run: echo "value=1.1.1" >> $GITHUB_OUTPUT
 
@@ -31,7 +31,7 @@ jobs:
           git tag -d latest || true
           $majorTag = "v1"
           git tag -d $majorTag || true
-          $minorTag = "v${{ steps.set-a-var.outputs.value }}"
+          $minorTag = "v${{ steps.set.outputs.value }}"
           git tag -d $minorTag || true
           git push origin :latest || true
           git push origin :$majorTag || true
